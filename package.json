@@ -1,0 +1,22 @@
+{
+  "name": "projeto-labook",
+  "version": "1.0.0",
+  "description": ":construction: Projeto Labook-backend Labenu Turma Ammal A.:construction:",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./build/index.js",
+    "build": "tsc",
+    "dev": "ts-node-dev ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karineveppo/projeto-labook.git"
+  },
+  "keywords": [],
+  "author": "Karine Veppo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karineveppo/projeto-labook/issues"
+  },
+  "homepage": "https://github.com/karineveppo/projeto-labook#readme"
+}
