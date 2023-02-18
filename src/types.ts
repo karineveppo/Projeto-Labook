@@ -1,4 +1,4 @@
-export enum ROLE_USER {
+export enum ROLE_USERS {
     ADMIN = "ADMIN",
     USER = "USER"
 }
@@ -8,18 +8,40 @@ export interface UserDB {
     name:string,
     email: string,
     password: string,
-    role: ROLE_USER,
+    role: ROLE_USERS,
     created_at: string
 }
 
+export interface UserModel {
+    id: string,
+    name: string,
+    email:string,
+    password: string,
+    role: ROLE_USERS,
+    createdAt: string
+}
+
 export interface PostDB {
-    is: string,
+    id: string,
     creator_id: string,
     content: string,
     likes: number,
     dislikes: number,
     created_at: string,
     updated_at: string
+}
+
+export interface PostModel {
+    id: string,
+    content: String,
+    likes: number,
+    dislikes: number,
+    createdAt: string,
+    updatedAt: string,
+    creator: {
+        id: string,
+        name: string
+    }
 }
 
 export interface CreatePostDB {
