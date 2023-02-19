@@ -72,3 +72,18 @@ VALUES
     ("u004", "p007",1);
 
 SELECT * FROM users;
+
+SELECT
+    posts.id,
+    posts.creator_id,
+    posts.content,
+    posts.likes,
+    posts.dislikes,
+    posts.created_at,
+    posts.updated_at,
+    users.name As cretor_name
+FROM posts
+JOIN users
+ON posts.creator_id = users.id;
+
+SELECT * FROM posts;

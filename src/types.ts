@@ -4,6 +4,7 @@ export enum ROLE_USERS {
 }
 
 export interface TokenPayLoad {
+    content: any
     id: string,
     name: string,
     role: ROLE_USERS
@@ -35,6 +36,11 @@ export interface PostDB {
     dislikes: number,
     created_at: string,
     updated_at: string
+}
+
+export interface postWithCreatorDB extends PostDB {
+    creator_new_id: string,
+    name: string
 }
 
 export interface PostModel {
