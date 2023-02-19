@@ -37,6 +37,11 @@ export interface PostDB {
     updated_at: string
 }
 
+export interface postWithCreatorDB extends PostDB {
+    creator_new_id: string,
+    name: string
+}
+
 export interface PostModel {
     id: string,
     content: String,
