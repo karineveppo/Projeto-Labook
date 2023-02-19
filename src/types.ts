@@ -3,6 +3,12 @@ export enum ROLE_USERS {
     USER = "USER"
 }
 
+export interface TokenPayLoad {
+    id: string,
+    name: string,
+    role: ROLE_USERS
+}
+
 export interface UserDB {
     id: string,
     name:string,
