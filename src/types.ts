@@ -4,6 +4,7 @@ export enum ROLE_USERS {
 }
 
 export interface TokenPayLoad {
+    content: any
     id: string,
     name: string,
     role: ROLE_USERS

@@ -1,13 +1,17 @@
-import { GetPostsOutputDTO, CreatePostInputDTO } from './../dtos/userDTO';
+import { GetPostsOutputDTO, CreatePostInputDTO, EditPostInputDTO } from './../dtos/userDTO';
 import { PostDatabase } from "../database/PostDatabase";
 import { GetPostsInputDTO } from "../dtos/userDTO";
 import { IdGenerator } from "../services/IdGenerator";
 import { TokenManager } from "../services/TokenManager";
 import { BadRequestError } from '../errors/BadRequestError';
-import { postWithCreatorDB } from '../types';
+import { PostDB, postWithCreatorDB } from '../types';
 import { Post } from '../models/Post';
+import { NotFoundError } from '../errors/NotFoundError';
 
 export class PostBusiness {
+    EditPost(input: EditPostInputDTO) {
+        throw new Error('Method not implemented.');
+    }
     constructor(
         private postDatabase: PostDatabase,
         private idGenerator: IdGenerator,
@@ -88,5 +92,54 @@ export class PostBusiness {
         const postDB = post.toDBModel()
 
         await this.postDatabase.insert(postDB)
+    }
+
+    public editPost = async (input: EditPostInputDTO): Promise<void> => {
+        const { idToEdit, token, content } = input
+
+        if(token === undefined) {
+            throw new BadRequestError ("Ops! Token inesistente!!")
+        }
+
+        const payload = this.tokenManager.getPayload(token)
+
+        if(payload === null) {
+            throw new BadRequestError ("Ops!...token inválido ou inesistente!!")
+        }
+
+        if(typeof content !== "string") {
+            throw new BadRequestError(" O 'content' deve ser string!")
+        }
+
+        const postDB = await this.postDatabase.findById(idToEdit)
+
+        if(!postDB) {
+            throw new NotFoundError("Essa não...'id' não cadastrado!")
+        }
+
+       const creatorId = payload.id
+
+       if(postDB.creator_id !== creatorId) {
+        throw new BadRequestError("Opa...Essa não! Somente quem criou pode editá-la!")
+       }
+        const creatrorContent = payload.content
+
+        const post = new Post(
+            postDB.id,
+            postDB.content,
+            postDB.likes,
+            postDB.dislikes,
+            postDB.created_at,
+            postDB.updated_at,
+            creatorId,
+            creatrorContent
+        )
+
+        post.setContent(content)
+        post.setUpdatedAt(new Date().toISOString())
+
+        const updatedPostDB = post.toDBModel()
+
+        await this.postDatabase.update(idToEdit, updatedPostDB)
     }
 }

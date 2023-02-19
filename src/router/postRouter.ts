@@ -17,3 +17,5 @@ const postController = new PostController(
 
 postPouter.get("/", postController.getPosts)
 postPouter.post("/", postController.createPost)
+postPouter.put("/:id", postController.editPost)
+//postPouter.post("/", postController.createPost)
